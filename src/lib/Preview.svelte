@@ -1,6 +1,10 @@
 <script>
     let urlInput = "https://darrenalderman.com";
     const exampleUrl = "https://darrenalderman.com";
+    export let insertHtml = "<!-- nada -->";
+    let height = "100%";
+    let width = "100%";
+    $: cssVarStyles = `--height: ${height}; --width: ${width};`;
 
     async function fetchHtmlContent(url) {
 
@@ -23,31 +27,14 @@
 
         const parser = new DOMParser();
         let doc = parser.parseFromString(content, "text/html");
+
+        // Fix relative links
 		const base = document.createElement('base');
 		base.setAttribute('href', url);	
 		base.setAttribute('target', '_blank');
 		doc.head.appendChild(base);
 
-        // prevent external resources from loading
-        // const links = doc.querySelectorAll('link');
-        // console.log(links);
-        // for (let i = 0; i < links.length; i++) {
-        //     console.log(links[i]);
-        //     links[i].parentNode.removeChild(links[i]);
-        //     console.log("removed");
-        // }
-        // const links2 = doc.querySelectorAll('link');
-        // console.log(links2);
-
-        //
-
-        //block scripts from running in html   
-        // const scripts = doc.querySelectorAll('script');
-        // for (let i = 0; i < scripts.length; i++) {
-        //     scripts[i].parentNode.removeChild(scripts[i]);
-        // }
-
-        //block links from opening in new tab
+        // Block clicks in iframe
         const scriptElement = doc.createElement('script');
         scriptElement.setAttribute('id', 'prevent-clicks');
         scriptElement.innerText = "document.addEventListener('click', (e) => {e.stopPropagation();e.preventDefault();return false;});";
@@ -61,16 +48,19 @@
         // fetch data from the browserless api and return then content as a string
         const content = await fetchHtmlContent(url);
 
-        const cleanedContent = cleanHtmlContent(url, content);
-
-		return cleanedContent;
+        return cleanedHtml = cleanHtmlContent(url, content);
     }
 
     let websiteToShow = exampleUrl;
+    let cleanedHtml = "<h1>👋</h1>";
     $: website = getModifiedHtmlContent(websiteToShow);
+
+    // update modifiedHtmlToShow when the color changes
+    $: modifiedHtmlToShow = cleanedHtml.replace("</head>", insertHtml + "</head>");
+    
 </script>
 
-<section id="previewContainer">
+<section id="previewContainer" style={cssVarStyles}>
 <div id="urlBar">
     <div id="urlEntry">
         <input type=url bind:value={urlInput}>
@@ -82,9 +72,9 @@
     {#await website}
         <!-- TODO: Add loading spinner -->
 	    <p>Loading...</p>   
-    {:then htmlContent}
+    {:then}
         <!-- TODO: Make resizable https://svelte.dev/repl/fd9d2216e7e243d49de8fae39ecc6fe8?version=3.37.0 -->
-        <iframe srcDoc={htmlContent} title="webpagePreview"></iframe>
+        <iframe srcDoc={modifiedHtmlToShow} title="webpagePreview"></iframe>
     {:catch error}
         <!-- TODO: Validate URLs -->
         <p style="color: red">{error.message}</p>
@@ -94,15 +84,23 @@
 
 
 <style>
+    /* https://svelte.dev/repl/8123d474edb04f198c3b83363716a709?version=3.54.0 */
+
+
+
     #previewContainer {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 90vh;
-        width: 90vw;
-        background-color: blue;
+        height: var(--height);
+        width: var(--width);
         border-radius: 0.5rem;
+    }
+
+    #websitePreview {
+        height: var(--height);
+        width: var(--width);
     }
 
     #urlBar {
@@ -131,8 +129,8 @@
         border-radius: 0 0 0.5rem 0.5rem;
         box-shadow: rgb(0 0 0 / 10%) 0px 0.5px 0px inset;
         margin-bottom: -7px;
-        height: 90vh;
-        width: 90vw;
+        height: var(--height);
+        width: var(--width);
     }
 
 
