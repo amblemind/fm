@@ -8,7 +8,15 @@
   const domain = window.location.href;
 
   $: showScript = twitterHandle !== "nocodedarren" && twitterHandle !== "";
-  $: insertHtml = showScript ? '<script id="madeby-fm" src="' + domain + 'madeby.js" data-twitter-handle="' + twitterHandle + '"><' + '/script>' : "";
+  $: insertHtml = showScript ? '<script id="madeby-fm" src="' + domain + 'madeby.js" data-twitter-handle="' + twitterHandle + '" defer><' + '/script>' : "";
+
+  let timer;
+  const debounce = v => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      twitterHandle = v;
+    }, 500);
+  }
 </script>
 
 <main>
@@ -16,17 +24,18 @@
       <Preview {insertHtml}/>
     </div>
     <div id="side-bar">
-        <h1>Made By</h1>
+        <h1>Made By <small>(alpha)</small></h1>
         <p>Encourage your visitors to connect with you on Twitter by adding a "Made By" link to your website.</p>
         <h4>Step 1: Enter your twitter handle</h4>
         <div id="inputContainer">
           <span>@</span>
-          <input type="text" placeholder="nocodedarren" on:blur={e => twitterHandle = e.target.value}/>
+          <input type="text" placeholder="nocodedarren" on:keyup={e => debounce(e.target.value)}/>
         </div>
         <!-- if twitterhandle not equal to nocodedarren -->
         {#if showScript}
-          <h4>Step 2: Copy this script to your website 👇</h4>
+          <h4>Step 2: Copy this script to your website 🔗</h4>
           <code>{insertHtml}</code>
+          <span style="padding-top: .8rem; text-align: center; font-size: .8rem;">Still testing things out. Let me know what you think! 👇</span>
         {/if}    
     </div>
 </main>
@@ -62,6 +71,11 @@
     border-radius: 0.5rem;
     padding: 0.5rem;
     width: 100%;
+  }
+
+  small {
+    font-size: 1rem;
+    font-weight: normal;
   }
 
   input {
