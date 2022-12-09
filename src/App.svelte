@@ -1,5 +1,6 @@
 <script>
   import Preview from './lib/Preview.svelte'
+    import Resizable from './lib/Resizable.svelte';
 
   let color = "";
   let twitterHandle = "nocodedarren";
@@ -21,7 +22,9 @@
 
 <main>
     <div id="previewContainer">
-      <Preview {insertHtml}/>
+      <Resizable>
+        <Preview {insertHtml}/>
+      </Resizable>
     </div>
     <div id="side-bar">
         <h1>Made By <small>(alpha)</small></h1>

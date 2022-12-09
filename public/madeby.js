@@ -8,10 +8,10 @@ window.onload = () => {
     a.setAttribute('href', 'https://twitter.com/' + twitterHandle);
     a.setAttribute('target', '_blank');
     a.innerHTML = "Made by <span style='font-weight: bold;'>@" + twitterHandle + "</span>";  
-    a.style = "position: fixed; right: 1.5rem; bottom: 1.5rem; padding: .5rem 1rem;" 
-        + "color: white; background-color: #009df6; text-decoration: none; border-radius: .5rem; font-size: 1rem; " 
+    a.style = "position: fixed; right: 32px; bottom: 32px; padding: 8px 16px;" 
+        + "color: white; background-color: #009df6; text-decoration: none; border-radius: 8px; font-size: 16px; " 
         + "cursor: pointer; transition: all .2s ease-in-out; z-index: 1000;"
-        + "box-shadow: 0 0 1rem rgba(0, 0, 0, .2);"
+        + "box-shadow: 0 0 32px rgba(0, 0, 0, .2);"
         + "font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;";
 
     a.onmouseover = () => a.style.transform = "scale(1.1)";
