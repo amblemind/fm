@@ -6,56 +6,16 @@
     let width = "100%";
     $: cssVarStyles = `--height: ${height}; --width: ${width};`;
 
-    async function fetchHtmlContent(url) {
+    async function getBlankHtml() {
 
-        if(url === exampleUrl || url === "") {
-            return await fetch('./blank.html').then(res => res.text());
-        } else {
-            return await fetch("https://chrome.browserless.io/content?token=8d790bfc-f092-4e63-b52f-877951482312", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    "url": url
-                }),
-            }).then((res) => res.text());
-        }
+        
+        let blankHtml = await fetch('./blank.html').then(res => res.text());
+
+        return cleanedHtml = blankHtml;
     }
 
-    function cleanHtmlContent(url, content) {
-
-        const parser = new DOMParser();
-        let doc = parser.parseFromString(content, "text/html");
-
-        // Fix relative links
-		const base = document.createElement('base');
-		base.setAttribute('href', url);	
-		base.setAttribute('target', '_blank');
-		doc.head.appendChild(base);
-
-        // Block clicks in iframe
-        const scriptElement = doc.createElement('script');
-        scriptElement.setAttribute('id', 'prevent-clicks');
-        scriptElement.innerText = "document.addEventListener('click', (e) => {e.stopPropagation();e.preventDefault();return false;});";
-        doc.head.appendChild(scriptElement);
-
-        return doc.documentElement.outerHTML;
-    }
-
-    async function getModifiedHtmlContent(url) {
-
-        // fetch data from the browserless api and return then content as a string
-        const content = await fetchHtmlContent(url);
-
-        return cleanedHtml = cleanHtmlContent(url, content);
-    }
-
-    let websiteToShow = exampleUrl;
     let cleanedHtml = "<h1>👋</h1>";
-    $: website = getModifiedHtmlContent(websiteToShow);
-
-    // update modifiedHtmlToShow when the color changes
+    $: website = getBlankHtml();
     $: modifiedHtmlToShow = cleanedHtml.replace("</head>", insertHtml + "</head>");
     
 </script>
@@ -63,8 +23,8 @@
 <section id="previewContainer" style={cssVarStyles}>
 <div id="urlBar">
     <div id="urlEntry">
-        <input type=url bind:value={urlInput}>
-        <button on:click={() => websiteToShow = urlInput}>Go 🚀</button>
+        <input type=url value="https://darrenalderman.com" disabled>
+        <!-- <button on:click={() => websiteToShow = urlInput}>Go 🚀</button> -->
     </div>  
 </div>
 
@@ -85,8 +45,6 @@
 
 <style>
     /* https://svelte.dev/repl/8123d474edb04f198c3b83363716a709?version=3.54.0 */
-
-
 
     #previewContainer {
         display: flex;
@@ -114,7 +72,7 @@
         align-items: center;
         z-index: 10;
         background-color: #f7f7f7;
-        border-radius: 0.5rem 0.5rem 0 0;
+        /* border-radius: 0.5rem 0.5rem 0 0; */
         box-shadow: rgb(0 0 0 / 10%) 0px -0.5px 0px inset;
     }
 
@@ -126,7 +84,7 @@
 
     iframe {
         border: none;
-        border-radius: 0 0 0.5rem 0.5rem;
+        /* border-radius: 0 0 0.5rem 0.5rem; */
         box-shadow: rgb(0 0 0 / 10%) 0px 0.5px 0px inset;
         margin-bottom: -7px;
         height: var(--height);

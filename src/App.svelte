@@ -1,103 +1,54 @@
 <script>
-  import Preview from './lib/Preview.svelte'
-    import Resizable from './lib/Resizable.svelte';
-
-  let color = "";
-  let twitterHandle = "nocodedarren";
-
-  // get root domain url
-  const domain = window.location.href;
-
-  $: showScript = twitterHandle !== "nocodedarren" && twitterHandle !== "";
-  $: insertHtml = showScript ? '<script id="madeby-fm" src="' + domain + 'madeby.js" data-twitter-handle="' + twitterHandle + '" defer><' + '/script>' : "";
-
-  let timer;
-  const debounce = v => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      twitterHandle = v;
-    }, 500);
-  }
+    import MadeBy from './lib/MadeBy.svelte';
 </script>
 
 <main>
-    <div id="previewContainer">
-      <Resizable>
-        <Preview {insertHtml}/>
-      </Resizable>
-    </div>
-    <div id="side-bar">
-        <h1>Made By <small>(alpha)</small></h1>
-        <p>Encourage your visitors to connect with you on Twitter by adding a "Made By" link to your website.</p>
-        <h4>Step 1: Enter your twitter handle</h4>
-        <div id="inputContainer">
-          <span>@</span>
-          <input type="text" placeholder="nocodedarren" on:keyup={e => debounce(e.target.value)}/>
-        </div>
-        <!-- if twitterhandle not equal to nocodedarren -->
-        {#if showScript}
-          <h4>Step 2: Copy this script to your website 🔗</h4>
-          <code>{insertHtml}</code>
-          <span style="padding-top: .8rem; text-align: center; font-size: .8rem;">Still testing things out. Let me know what you think! 👇</span>
-        {/if}    
+    <!-- add a navbar with just a text title -->
+    <nav id="top">
+        <h3>FreakingMagical.com</h3>
+    </nav>
+    <div id="grid-container">
+        <nav id="side">
+            <button><b>MadeBy</b></button>
+            <button on:click={() => window.alert("Coming Soon")} style="color: #ffffff77" title="Coming Soon!">Instant Darkmode</button>
+        </nav>
+        <MadeBy />  
     </div>
 </main>
 
 <style>
-  /* css grid with 2 columns */
-  main {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
-  }
+    main {
+        width: 100vw;
+        height: 100vh;
+    }
 
-  #previewContainer {
-    min-width: 30rem;
-    width: calc(100vw - 30rem);
-    height: calc(100vh - 4rem);
-    margin: 2rem;
-  }
+    nav#top {
+        border-bottom: 1px solid #ffffff77;
+        padding: 0 1rem;
+        height: 2.5rem;
+    }
 
-  #side-bar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-right: 2rem;
-    width: 22rem;
-  }
+    div#grid-container {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        grid-template-rows: 1fr;
+        grid-column-gap: 10px;
+        grid-row-gap: 0px;
+    }
 
-  #inputContainer {
-    display: flex;
-    align-items: center;
-    border: 1px solid grey;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    width: 100%;
-  }
+    nav#side {
+        padding: 1rem 0;
+        border-right: 1px solid #ffffff77;
+    }
 
-  small {
-    font-size: 1rem;
-    font-weight: normal;
-  }
+    nav > button {
+        border: none;
+        font-weight: 100;
+        font-size: .9rem;
+        width: 100%;
+        text-align: left;
+    }
 
-  input {
-    width: 100%;
-    margin-left: .2rem;
-    border: none; 
-    background: transparent;
-    font-size: 1rem;
-    color: white;
-  }
 
-  input:focus {
-    outline: none;
-  }
 
-  code {
-    background-color: grey;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    width: 100%;
-  }
 </style>

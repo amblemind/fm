@@ -2,18 +2,23 @@
     Made by DarrenAlderman.com 😁
     <script>
         window.madeByOverrides = {
-            "size": 1, // Size of text, padding, etc. in rem (default: 1, try: .5, 1.2, etc.)
-            "location": "bottom-right", // Location of the text. Options: "top-left", "top-right", "bottom-left", "bottom-right" (default: "bottom-right")
-            "spaceTop": 1, // Padding space added to the top in rem (default: 1, try: .5, 1.5, etc.)
+            "size": 2, // Size of text, padding, etc. in rem (default: 1, try: .5, 1.2, etc.)
+            "location": "top-left", // Location of the text. Options: "top-left", "top-right", "bottom-left", "bottom-right" (default: "bottom-right")
+            "spaceTop": 5, // Padding space added to the top in rem (default: 1, try: .5, 1.5, etc.)
             "spaceRight": 1, // Padding space added to the right in rem (default: 1, try: .5, 1.5, etc.)
             "spaceBottom": 1, // Padding space added to the bottom in rem (default: 1, try: .5, 1.5, etc.)
-            "spaceLeft": 1, // Padding space added to the left in rem (default: 1, try: .5, 1.5, etc.)
-            "bgColor": "#009df6", // Background color of the tile (default: "#009df6", try: "red", "#fff", etc.)
-            "textColor": "white", // Text color in the tile (default: "white", try: "black", "#000", etc.)
-            "madeBy": "Made by", // Override the "Made by" text (default: "Made by", try: "Created by", "Built by", etc.)
+            "spaceLeft": -5, // Padding space added to the left in rem (default: 1, try: .5, 1.5, etc.)
+            "bgColor": "pink", // Background color of the tile (default: "#009df6", try: "red", "#fff", etc.)
+            "textColor": "black", // Text color in the tile (default: "white", try: "black", "#000", etc.)
+            "madeBy": "Powered by", // Override the "Made by" text (default: "Made by", try: "Created by", "Built by", etc.)
             "handle": "Darren 🚀", // Override the Twitter handle (default: "Twitter handle", try: "Your name", "Your company", etc.)
             "link": "https://darrenalderman.com/", // Link to a site (default: "https://twitter.com/yourhandle")
-          };
+        };
+        window.madeByCss = {
+            "borderRadius": "0",
+            "zIndex": "-1",
+            // ... any other CSS properties you want to override
+        };
     </script>
     <script id="madeby-fm" src="https://freakingmagical.com/madeby.js" data-twitter-handle="nocodedarren" defer></script>
 */
@@ -22,6 +27,7 @@ window.onload = () => {
     const thisScript = document.querySelector('#madeby-fm') || {};
     const twitterHandle = thisScript.dataset.twitterHandle || 'nocodedarren';
     const overrides = window.madeByOverrides || {};
+    const customCss = window.madeByCss || {};
     const size = overrides.size || 1;
 
     const location = overrides.location || "bottom-right";
@@ -60,14 +66,16 @@ window.onload = () => {
         "cursor": "pointer",
         "transition": "all .2s ease-in-out",
         "z-index": "1000",
-        "box-shadow": "0 0 #0000, 0 0 #0000, 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-        "font-family": "-apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif"
+        "box-shadow": "0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        // "font-family": "-apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif"
     };
     
     const a = document.createElement('a');
+    
     a.setAttribute('href', link);
     a.setAttribute('target', '_blank');
     a.innerHTML = `${madeByText} <span style='font-weight: bold;'>${nameText}</span>`;  
+    Object.assign(styles, customCss);
     Object.assign(a.style, styles);
     a.onmouseover = () => a.style.transform = "scale(1.1)";
     a.onmouseout = () => a.style.transform = "scale(1)";
