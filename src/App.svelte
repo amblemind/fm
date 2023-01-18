@@ -10,7 +10,7 @@
     <div id="grid-container">
         <nav id="side">
             <button><b>MadeBy</b></button>
-            <button on:click={() => window.alert("Coming Soon")} style="color: #ffffff77" title="Coming Soon!">Instant Darkmode</button>
+            <button on:click={() => window.open("https://darkmodejs.learn.uno?ref=freakingmagical.com")} title="DarkMode.js">Instant Darkmode</button>
         </nav>
         <MadeBy />  
     </div>
