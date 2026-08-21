@@ -1,47 +1,137 @@
-# Svelte + Vite
+# Made By Tag
 
-This template should help get you started developing with Svelte in Vite.
+Design a floating “Made by” link for your website, watch it on a real page, and walk away with one
+self-contained `<script>` tag. No build step, no dependencies, no account.
 
-## Recommended IDE Setup
+**[Try it →](https://fm-kappa.vercel.app)**
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+![The builder, with a live preview of the tag on a placeholder site](docs/screenshot.png)
 
-## Need an official Svelte framework?
+---
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+## The idea
 
-## Technical considerations
+Plenty of sites carry a small “Made by …” badge in the corner. Writing one is ten minutes of fiddling
+with `position: fixed` and then guessing at the colours. This does the fiddling for you and hands back
+the finished code.
 
-**Why use this over SvelteKit?**
+The part worth knowing: **the preview is not a mock-up of the tag — it is the tag.** The panel builds
+one snippet string, the code view shows you that string, and the preview iframe executes that same
+string on a placeholder page. There is no second implementation to fall out of sync, so what you see
+is what your site gets.
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshot-code.png" alt="The generated snippet, syntax highlighted, with a copy button" /></td>
+    <td width="50%"><img src="docs/screenshot-install.png" alt="Install instructions and the full options reference" /></td>
+  </tr>
+  <tr>
+    <td>The snippet it writes for you, highlighted and one click from your clipboard.</td>
+    <td>The hosted-script alternative, generated from whatever you just designed.</td>
+  </tr>
+</table>
 
-This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+The light/dark switch above the preview is there because your tag has to sit on top of a page it does
+not control, and a colour that reads on white can vanish on charcoal.
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+## Installing the tag
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+### The snippet (recommended)
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+Design it in the app, hit **Copy code**, and paste the result before your closing `</head>`. It is
+plain DOM code with nothing to fetch — the tag survives this project disappearing entirely.
 
-**Why include `.vscode/extensions.json`?**
+### The hosted script
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+If you would rather have fixes reach your site without re-pasting, load the script instead and
+describe the design in `window.madeByOverrides`:
 
-**Why enable `checkJs` in the JS template?**
-
-It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```js
-// store.js
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+```html
+<script>
+  window.madeByOverrides = {
+    madeBy: "Made by",
+    handle: "@nocodedarren",
+    link: "https://twitter.com/nocodedarren",
+    textColor: "#ffffff",
+    bgColor: "#009df6",
+    size: 1,
+    location: "bottom-right",
+    spaceTop: 1, spaceRight: 1, spaceBottom: 1, spaceLeft: 1
+  };
+</script>
+<script src="https://fm-kappa.vercel.app/madeby.js" defer></script>
 ```
+
+The **How to Use This** tab generates this block from whatever you have designed, so you do not have
+to hand-write it.
+
+The older form still works, and still defaults to a Twitter handle:
+
+```html
+<script id="madeby-fm" src="https://fm-kappa.vercel.app/madeby.js" data-twitter-handle="nocodedarren" defer></script>
+```
+
+### Options
+
+| Option | Default | What it does |
+| --- | --- | --- |
+| `madeBy` | `"Made by"` | The lead-in text. Leave it empty for just the name. |
+| `handle` | `"@" + data-twitter-handle` | The bold part. Any name works, not only a handle. |
+| `link` | the handle's Twitter profile | Where the tag points. |
+| `textColor` | `"#ffffff"` | Text colour. |
+| `bgColor` | `"#009df6"` | Tile colour. |
+| `size` | `1` | Scales text, padding and corner radius together, in rem. |
+| `location` | `"bottom-right"` | `top-left`, `top-right`, `bottom-left` or `bottom-right`. |
+| `spaceTop` … `spaceLeft` | `1` | Offset from the edges, in rem. Negatives push it off-screen. |
+
+For anything the options do not cover, `window.madeByCss` is merged over the finished styles last:
+
+```html
+<script>
+  window.madeByCss = { borderRadius: "0", fontFamily: "Georgia, serif" };
+</script>
+```
+
+## Running it locally
+
+```bash
+npm install
+npm run dev
+```
+
+`npm run build` runs twice: once for the app, and once more to emit `dist/madeby.js` — the hosted
+script, bundled from the same `src/lib/tag.js` the builder uses. That second pass is deliberate. When
+the builder and the hosted script lived in separate repositories they quietly drifted apart, and one
+grew features the other never got.
+
+## Notes
+
+- The tag is a plain `<a>` with inline styles and `z-index: 1000`. A site with its own fixed elements
+  in that corner will need the offsets nudged.
+- Text is written with `textContent`, and every value in the generated snippet goes through
+  `JSON.stringify` — so an apostrophe, a quote or a literal `</script>` in your name cannot break the
+  code you paste.
+- The script listens for `DOMContentLoaded` rather than assigning `window.onload`, which would have
+  replaced whatever load handler your site already had.
+- The preview iframe is sandboxed without `allow-same-origin`, so the snippet runs in an opaque origin
+  and cannot reach back into the builder.
+
+## This repo replaces two
+
+It used to be split in half, which is where the drift came from:
+
+- `amblemind/fm` — “Freakin' Magical”, a planned collection of copy-and-paste site widgets. Made By was
+  the only one that got built, so the collection framing and its sidebar are gone.
+- `amblemind/madeby` — the standalone script, published for jsDelivr.
+
+Both now live here. The old jsDelivr URL still resolves as long as that repository stays up, so archive
+it rather than deleting it.
+
+## Built with
+
+[Svelte 5](https://svelte.dev), [Vite](https://vite.dev), [Prism](https://prismjs.com) for the code
+view, and [Inter](https://rsms.me/inter/). Deployed on [Vercel](https://vercel.com).
+
+## License
+
+MIT — see [LICENSE](LICENSE).
