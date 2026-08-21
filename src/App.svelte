@@ -4,6 +4,7 @@
   import PreviewPane from './lib/PreviewPane.svelte';
   import CodePane from './lib/CodePane.svelte';
   import InstallPane from './lib/InstallPane.svelte';
+  import GitHubStar from './lib/GitHubStar.svelte';
 
   const VIEWS = [
     { id: 'preview', label: 'Create & Preview' },
@@ -50,9 +51,9 @@
       {/each}
     </nav>
 
-    <a class="source" href="https://github.com/amblemind/made-by-tag" target="_blank" rel="noopener">
-      Source
-    </a>
+    <div class="actions">
+      <GitHubStar repo="amblemind/made-by-tag" />
+    </div>
   </header>
 
   <main>
@@ -136,15 +137,11 @@
     box-shadow: 0 1px 2px rgb(0 0 0 / 0.4);
   }
 
-  .source {
+  .actions {
     justify-self: end;
-    color: var(--muted);
-    font-size: 0.84rem;
-    text-decoration: none;
-    white-space: nowrap;
+    display: flex;
+    align-items: center;
   }
-
-  .source:hover { color: var(--text); }
 
   main {
     display: grid;
