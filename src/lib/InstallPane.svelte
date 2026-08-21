@@ -1,12 +1,12 @@
 <script>
   import Prism from 'prismjs';
   import CopyButton from './CopyButton.svelte';
-  import { buildHostedSnippet } from './tag.js';
+  import { buildHostedSnippet, DEFAULTS } from './tag.js';
 
   let { inputs } = $props();
 
   // Where this app is deployed. Update if it moves to a custom domain.
-  const PROD_ORIGIN = 'https://fm-kappa.vercel.app';
+  const PROD_ORIGIN = 'https://made-by-tag.vercel.app';
 
   // Points at wherever this is served from, so the URL survives a rename — but
   // never hands someone a localhost URL to paste into their live site.
@@ -25,15 +25,18 @@
     ['Paste it', 'Drop it before </head> in your site’s HTML, or into any “custom code” box.']
   ];
 
+  // Shown defaults come from DEFAULTS so the docs cannot drift from the code.
+  const q = (value) => JSON.stringify(value);
+
   const options = [
-    ['madeBy', '"Made by"', 'The lead-in text. Leave it empty for just the name.'],
-    ['handle', '"@nocodedarren"', 'The bold part. Any name works, not only a handle.'],
-    ['link', 'the Twitter profile', 'Where the tag points.'],
-    ['textColor', '"#ffffff"', 'Text colour.'],
-    ['bgColor', '"#009df6"', 'Tile colour.'],
-    ['size', '1', 'Scales text, padding and radius together, in rem.'],
-    ['location', '"bottom-right"', 'Which corner the tag sits in.'],
-    ['spaceTop …', '1', 'Offset from each edge, in rem. Negatives work.']
+    ['madeBy', q(DEFAULTS.madeBy), 'The lead-in text. Leave it empty for just the name.'],
+    ['handle', q(DEFAULTS.handle), 'The bold part. Any name works, not only a handle.'],
+    ['link', q(DEFAULTS.link), 'Where the tag points.'],
+    ['textColor', q(DEFAULTS.textColor), 'Text colour.'],
+    ['bgColor', q(DEFAULTS.bgColor), 'Tile colour.'],
+    ['size', String(DEFAULTS.size), 'Scales text, padding and radius together, in rem.'],
+    ['location', q(DEFAULTS.corner), 'Which corner the tag sits in.'],
+    ['spaceTop …', String(DEFAULTS.spaceTop), 'Offset from each edge, in rem. Negatives work.']
   ];
 </script>
 

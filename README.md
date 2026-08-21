@@ -3,7 +3,7 @@
 Design a floating “Made by” link for your website, watch it on a real page, and walk away with one
 self-contained `<script>` tag. No build step, no dependencies, no account.
 
-**[Try it →](https://fm-kappa.vercel.app)**
+**[Try it →](https://made-by-tag.vercel.app)**
 
 ![The builder, with a live preview of the tag on a placeholder site](docs/screenshot.png)
 
@@ -50,16 +50,16 @@ describe the design in `window.madeByOverrides`:
 <script>
   window.madeByOverrides = {
     madeBy: "Made by",
-    handle: "@nocodedarren",
-    link: "https://twitter.com/nocodedarren",
+    handle: "@darrenalderman",
+    link: "https://www.linkedin.com/in/darren-alderman/",
     textColor: "#ffffff",
-    bgColor: "#009df6",
+    bgColor: "#c76b2e",
     size: 1,
     location: "bottom-right",
     spaceTop: 1, spaceRight: 1, spaceBottom: 1, spaceLeft: 1
   };
 </script>
-<script src="https://fm-kappa.vercel.app/madeby.js" defer></script>
+<script src="https://made-by-tag.vercel.app/madeby.js" defer></script>
 ```
 
 The **How to Use This** tab generates this block from whatever you have designed, so you do not have
@@ -68,7 +68,7 @@ to hand-write it.
 The older form still works, and still defaults to a Twitter handle:
 
 ```html
-<script id="madeby-fm" src="https://fm-kappa.vercel.app/madeby.js" data-twitter-handle="nocodedarren" defer></script>
+<script id="madeby-fm" src="https://made-by-tag.vercel.app/madeby.js" data-twitter-handle="darrenalderman" defer></script>
 ```
 
 ### Options
@@ -76,10 +76,10 @@ The older form still works, and still defaults to a Twitter handle:
 | Option | Default | What it does |
 | --- | --- | --- |
 | `madeBy` | `"Made by"` | The lead-in text. Leave it empty for just the name. |
-| `handle` | `"@" + data-twitter-handle` | The bold part. Any name works, not only a handle. |
-| `link` | the handle's Twitter profile | Where the tag points. |
+| `handle` | `"@darrenalderman"` | The bold part. Any name works, not only a handle. |
+| `link` | a LinkedIn profile | Where the tag points. |
 | `textColor` | `"#ffffff"` | Text colour. |
-| `bgColor` | `"#009df6"` | Tile colour. |
+| `bgColor` | `"#c76b2e"` | Tile colour. |
 | `size` | `1` | Scales text, padding and corner radius together, in rem. |
 | `location` | `"bottom-right"` | `top-left`, `top-right`, `bottom-left` or `bottom-right`. |
 | `spaceTop` … `spaceLeft` | `1` | Offset from the edges, in rem. Negatives push it off-screen. |
@@ -121,7 +121,8 @@ grew features the other never got.
 It used to be split in half, which is where the drift came from:
 
 - `amblemind/fm` — “Freakin' Magical”, a planned collection of copy-and-paste site widgets. Made By was
-  the only one that got built, so the collection framing and its sidebar are gone.
+  the only one that got built, so the collection framing and its sidebar are gone. That repository is
+  now this one, renamed to `made-by-tag`.
 - `amblemind/madeby` — the standalone script, published for jsDelivr.
 
 Both now live here. The old jsDelivr URL still resolves as long as that repository stays up, so archive

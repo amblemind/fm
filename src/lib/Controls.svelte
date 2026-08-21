@@ -21,17 +21,17 @@
 
     <label class="field">
       <span>Made by</span>
-      <input type="text" placeholder="Made by" bind:value={inputs.madeBy} />
+      <input type="text" placeholder={DEFAULTS.madeBy} bind:value={inputs.madeBy} />
     </label>
 
     <label class="field">
       <span>Name or handle</span>
-      <input type="text" placeholder="@nocodedarren" bind:value={inputs.handle} />
+      <input type="text" placeholder={DEFAULTS.handle} bind:value={inputs.handle} />
     </label>
 
     <label class="field">
       <span>Links to</span>
-      <input type="url" placeholder="https://twitter.com/nocodedarren" bind:value={inputs.link} />
+      <input type="url" placeholder={DEFAULTS.link} bind:value={inputs.link} />
     </label>
   </section>
 

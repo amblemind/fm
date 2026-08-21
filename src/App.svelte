@@ -50,7 +50,7 @@
       {/each}
     </nav>
 
-    <a class="source" href="https://github.com/amblemind/fm" target="_blank" rel="noopener">
+    <a class="source" href="https://github.com/amblemind/made-by-tag" target="_blank" rel="noopener">
       Source
     </a>
   </header>

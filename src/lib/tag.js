@@ -15,11 +15,11 @@ export const CORNERS = [
 
 export const DEFAULTS = {
   madeBy: 'Made by',
-  handle: '@nocodedarren',
-  link: 'https://twitter.com/nocodedarren',
+  handle: '@darrenalderman',
+  link: 'https://www.linkedin.com/in/darren-alderman/',
 
   textColor: '#ffffff',
-  bgColor: '#009df6',
+  bgColor: '#c76b2e',
   size: 1,
 
   corner: 'bottom-right',

@@ -58,7 +58,7 @@ export function demoPage(theme = 'light') {
 <body>
   <div class="wrap">
     <header>
-      <div class="logo"><i></i> Northbound</div>
+      <div class="logo"><i></i> AmbleMind</div>
       <nav><span>Product</span><span>Pricing</span><span>Docs</span><span>Log in</span></nav>
     </header>
 
@@ -75,7 +75,7 @@ export function demoPage(theme = 'light') {
       <div class="card"><div class="bar" style="width:80%"></div><div class="bar" style="width:60%"></div><div class="bar" style="width:38%"></div></div>
     </div>
 
-    <footer>© Northbound. A placeholder site.</footer>
+    <footer>© AmbleMind. A placeholder site.</footer>
   </div>
 </body>
 </html>`;
